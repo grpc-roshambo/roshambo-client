@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package roshambo;
+
+option java_multiple_files = true;
+option java_package = "com.grpcroshambo.roshambo";
+option java_outer_classname = "RoshamboProto";
+
+enum Choice {
+  SURRENDER = 0;
+  ROCK = 1;
+  PAPER = 2;
+  SCISSORS = 3;
+}
+
+enum Result {
+  WIN = 0;
+  LOSE = 1;
+  TIE = 2;
+}
+
+message JoinRequest {
+  string name = 1;
+}
+
+message MatchRequestsFromServer {
+  string matchToken = 1;
+  string opponentName = 2;
+  Choice opponentLastChoice = 3;
+}
+
+message MatchChoice {
+  string matchToken = 1;
+  Choice choice = 2;
+}
+
+message MatchResult {
+  string matchToken = 1;
+  Result result = 2;
+  Choice opponentChoice = 3;
+}
+
+service RoshamboService {
+  rpc join(JoinRequest) returns (stream MatchRequestsFromServer);
+  rpc play(MatchChoice) returns (stream MatchResult);
+}
