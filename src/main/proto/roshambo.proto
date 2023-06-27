@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 package roshambo;
 
 option java_multiple_files = true;
@@ -25,7 +23,7 @@ message JoinRequest {
   string name = 1;
 }
 
-message MatchRequestsFromServer {
+message MatchRequestFromServer {
   string matchToken = 1;
   string opponentName = 2;
   Choice opponentLastChoice = 3;
@@ -43,6 +41,6 @@ message MatchResult {
 }
 
 service RoshamboService {
-  rpc join(JoinRequest) returns (stream MatchRequestsFromServer);
+  rpc join(JoinRequest) returns (stream MatchRequestFromServer);
   rpc play(MatchChoice) returns (stream MatchResult);
 }

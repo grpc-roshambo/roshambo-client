@@ -31,13 +31,13 @@ public class RoshamboService {
                     .build();
             roshamboServiceStub.join(request, new StreamObserver<>() {
                 @Override
-                public void onNext(MatchRequestsFromServer matchRequestsFromServer) {
-                    logger.info("Received match request with token=" + matchRequestsFromServer.getMatchToken());
+                public void onNext(MatchRequestFromServer matchRequestFromServer) {
+                    logger.info("Received match request with token=" + matchRequestFromServer.getMatchToken());
                     Choice choice = Choice.forNumber(random.nextInt(3) + 1);
-                    logger.info("Choice=" + choice + " seems to be a good choice for matchToken=" + matchRequestsFromServer.getMatchToken());
+                    logger.info("Choice=" + choice + " seems to be a good choice for matchToken=" + matchRequestFromServer.getMatchToken());
                     MatchChoice matchChoice = MatchChoice
                             .newBuilder()
-                            .setMatchToken(matchRequestsFromServer.getMatchToken())
+                            .setMatchToken(matchRequestFromServer.getMatchToken())
                             .setChoice(choice)
                             .build();
                     roshamboServiceStub.play(matchChoice, new StreamObserver<>() {
